@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines.
+
+    <dimen name="iconarrow">1dp</dimen>
+    <item name="text_view_padding" type="integer">100</item>  -->
+
+    <!-- Brush sizes -->
+    <dimen name="small_brush">10dp</dimen>
+    <integer name="small_size">10</integer>
+    <dimen name="medium_brush">20dp</dimen>
+    <integer name="medium_size">20</integer>
+    <dimen name="large_brush">30dp</dimen>
+    <integer name="large_size">30</integer>
+
+</resources>
+
+<!--
+**** use in code like this ****
+codetextview.setPadding(0, 0, 0, getResources().getInteger(R.integer.text_view_padding));
+
+**** can also use in other layout(xml file). ****
+android:padding="@dimen/text_view_padding"
+-->
