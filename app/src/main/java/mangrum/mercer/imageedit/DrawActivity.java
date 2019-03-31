@@ -135,4 +135,9 @@ public class DrawActivity extends View {
         else drawPaint.setXfermode(null);
     }
 
+    public void startNew(){
+        drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        invalidate();
+    }
+
 }

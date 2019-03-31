@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DrawActivity drawAct;
-    private ImageButton currPaint, drawBtn, eraseBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
 
     private float smallBrush, mediumBrush, largeBrush;
 
@@ -47,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         eraseBtn = (ImageButton)findViewById(R.id.erase_btn);
         eraseBtn.setOnClickListener(this);
+
+        newBtn = (ImageButton)findViewById(R.id.new_btn);
+        newBtn.setOnClickListener(this);
+
+        saveBtn = (ImageButton)findViewById(R.id.save_btn);
+        saveBtn.setOnClickListener(this);
     }
 
     public void paintClicked(View view) {
@@ -120,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             brushDialog.show();
         }
         // Erase
-
         else if(v.getId()==R.id.erase_btn){
             //switch to erase - choose size
             final Dialog brushDialog = new Dialog(this);
@@ -159,8 +164,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
             brushDialog.show();
+        }
+        //NEW
+        else if(v.getId()==R.id.new_btn){
+
+            AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+            newDialog.setTitle("New drawing");
+            newDialog.setMessage("Start new drawing (you will lose the current drawing)?");
+            newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    drawAct.startNew();
+                    dialog.dismiss();
+                }
+            });
+            newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.cancel();
+                }
+            });
+            newDialog.show();
 
         }
+        // Save
+        else if(v.getId()==R.id.save_btn){
+
+            AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
+            saveDialog.setTitle("Save drawing");
+            saveDialog.setMessage("Save drawing to device Gallery?");
+            saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    //save drawing
+                }
+            });
+            saveDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.cancel();
+                }
+            });
+            saveDialog.show();
+
+            //enabling drawing
+            drawAct.setDrawingCacheEnabled(true);
+
+            //write the image to a file
+            String imgSaved = MediaStore.Images.Media.insertImage(
+                    getContentResolver(), drawAct.getDrawingCache(),
+                    UUID.randomUUID().toString()+".png", "drawing");
+
+            if(imgSaved!=null){
+                Toast savedToast = Toast.makeText(getApplicationContext(),
+                        "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
+                savedToast.show();
+            }
+            else{
+                Toast unsavedToast = Toast.makeText(getApplicationContext(),
+                        "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
+                unsavedToast.show();
+            }
+            drawAct.destroyDrawingCache();
+        }
+
     }
 
 }
