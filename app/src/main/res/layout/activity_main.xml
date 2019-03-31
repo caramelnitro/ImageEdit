@@ -4,42 +4,21 @@
     android:layout_height="match_parent"
     android:background="#FFCCCCCC"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
-    </LinearLayout>
-
-    <!-- Add new image button -->
-
-    <!-- Add custom view class -->
-    <com.example.drawingfun.DrawingView
-        android:id="@+id/drawing"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="3dp"
-        android:layout_weight="1"
-        android:background="#FFFFFFFF" />
+    tools:context=".MainActivity">
 
     <!-- Add palette buttons -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <!-- Top Row -->
         <LinearLayout
             android:id="@+id/paint_colors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <!--  Add colors -->
             <ImageButton
@@ -102,15 +81,6 @@
                 android:src="@drawable/paint"
                 android:tag="#FF009999" />
 
-        </LinearLayout>
-
-        <!-- Bottom Row -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <!-- make the background color show through to create a circle -->
             <ImageButton
                 android:layout_width="@dimen/large_brush"
                 android:layout_height="@dimen/large_brush"
@@ -173,35 +143,58 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Add brush button -->
-    <ImageButton
-        android:id="@+id/draw_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/brush"
-        android:src="@drawable/brush" />
+        <!-- Add custom view class -->
+        <com.example.drawingfun.DrawingView
+            android:id="@+id/drawing"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="#FFFFFFFF" />
 
-    <!-- Add eraser button -->
-    <ImageButton
-        android:id="@+id/new_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/start_new"
-        android:src="@drawable/new_pic" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/erase_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/erase"
-        android:src="@drawable/eraser" />
+                <!-- Add brush button -->
+                <ImageButton
+                    android:id="@+id/draw_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/brush"
+                    android:src="@drawable/brush" />
 
-    <!-- Add save button -->
-    <ImageButton
-        android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/save"
-        android:src="@drawable/save" />
+                <!-- Add new button -->
+                <ImageButton
+                    android:id="@+id/new_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/start_new"
+                    android:src="@drawable/new_pic" />
+
+                <!-- Add eraser button -->
+                <ImageButton
+                    android:id="@+id/erase_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/erase"
+                    android:src="@drawable/eraser" />
+
+                <!-- Add save button -->
+                <ImageButton
+                    android:id="@+id/save_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/save"
+                    android:src="@drawable/save" />
+
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             imgView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint_pressed));
 
-            // ******************************** NEED THIS LINE. The code is depreciated and I don't know how to fix it. 
+            // ******************************** NEED THIS LINE. The code is depreciated and I don't know how to fix it.
     //        currPaint.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint));
 
             currPaint=(ImageButton)view;
