@@ -30,10 +30,6 @@ public class DrawActivity extends View {
     private float brushSize, lastBrushSize;
     private boolean erase = false;
 
-    public DrawActivity(Context context) {
-        super(context);
-    }
-
     public DrawActivity(Context context, AttributeSet attrs) {
         super(context, attrs);
         imageDraw();
