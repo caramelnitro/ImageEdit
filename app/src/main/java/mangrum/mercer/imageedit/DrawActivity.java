@@ -101,7 +101,7 @@ public class DrawActivity extends View {
 
         }
         invalidate();
-        return super.onTouchEvent(event);
+        return true;
         // return true;
     }
 

@@ -1,10 +1,8 @@
 package mangrum.mercer.imageedit;
 
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -89,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-            imgView.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
-            currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint));
+            imgView.setImageDrawable(getDrawable(R.drawable.paint_pressed));
+            currPaint.setImageDrawable(getDrawable(R.drawable.paint));
             currPaint=(ImageButton)view;
         }
 
