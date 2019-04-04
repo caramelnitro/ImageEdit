@@ -3,6 +3,7 @@ package mangrum.mercer.imageedit;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -25,9 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int colorIds[] = {R.id.maroonB, R.id.redB, R.id.orangeB, R.id.yellowB,
     R.id.greenB, R.id.indigoB, R.id. blueB, R.id.purpleB, R.id.salmonB, R.id.whiteB, R.id.greyB, R.id.blackB};
 
-    private String colorsArray[] = {"#FF660000","#FFFF0000", "#FFFF6600", "#FFFFCC00", "#FF009900",
-            "#FF009999", "#FF0000FF", "#FF990099", "#FFFF6666", "#FFFFFFFF", "#FF787878", "#FF000000"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         largeBrush = getResources().getInteger(R.integer.large_size);
 
         drawBtn = findViewById(R.id.draw_btn);
-
         drawBtn.setOnClickListener(this);
 
         drawAct.setBrushSize(mediumBrush);
@@ -60,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         saveBtn = findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(this);
 
-        for(int i = 0; i < colorIds.length; i++){
-            colors = findViewById(colorIds[i]);
+        for(int i = 0; i < paintLayout.getChildCount(); i++){
+            colors = (ImageButton)paintLayout.getChildAt(i);
             colors.setOnClickListener(this);
         }
     }
@@ -71,25 +68,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(view!=currPaint){
         //update color
+            Log.i("YAY", "Made it");
             ImageButton imgView = (ImageButton)view;
             String color = view.getTag().toString();
 
             drawAct.setColor(color);
 
 
-            imgView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint_pressed));
+            /*imgView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint_pressed));
 
             currPaint.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint));
 
-            currPaint=(ImageButton)view;
+            currPaint=imgView;*/
 
             drawAct.setBrushSize(drawAct.getLastBrushSize());
 
-
-
             imgView.setImageDrawable(getDrawable(R.drawable.paint_pressed));
             currPaint.setImageDrawable(getDrawable(R.drawable.paint));
-            currPaint=(ImageButton)view;
+            currPaint=imgView;
         }
 
     }
@@ -98,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         if(v.getId()==R.id.draw_btn){
-
+            drawAct.setErase(false);
             //draw button clicked
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setTitle("Brush size:");
@@ -149,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onClick(View v) {
                     drawAct.setErase(true);
                     drawAct.setBrushSize(smallBrush);
-                    drawAct.setErase(false);
                     brushDialog.dismiss();
                 }
             });
@@ -169,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onClick(View v) {
                     drawAct.setErase(true);
                     drawAct.setBrushSize(largeBrush);
-                    drawAct.setErase(false);
                     brushDialog.dismiss();
                 }
             });
@@ -234,11 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawAct.destroyDrawingCache();
         }
         else {
-            for (int i = 0; i < colorIds.length; i++) {
-                if (v.getId() == colorIds[i]) {
-                    drawAct.setColor(colorsArray[i]);
-                }
-            }
+            paintClicked(v);
         }
 
     }
