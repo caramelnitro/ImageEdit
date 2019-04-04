@@ -1,8 +1,10 @@
 package mangrum.mercer.imageedit;
 
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -19,8 +21,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private DrawActivity drawAct;
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
-
+    private ImageButton colors;
     private float smallBrush, mediumBrush, largeBrush;
+
+    private int colorIds[] = {R.id.maroonB, R.id.redB, R.id.orangeB, R.id.yellowB,
+    R.id.greenB, R.id.indigoB, R.id. blueB, R.id.purpleB, R.id.salmonB, R.id.whiteB, R.id.greyB, R.id.blackB};
+
+    private String colorsArray[] = {"#FF660000","#FFFF0000", "#FFFF6600", "#FFFFCC00", "#FF009900",
+            "#FF009999", "#FF0000FF", "#FF990099", "#FFFF6666", "#FFFFFFFF", "#FF787878", "#FF000000"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         saveBtn = findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(this);
+
+        for(int i = 0; i < colorIds.length; i++){
+            colors = findViewById(colorIds[i]);
+            colors.setOnClickListener(this);
+        }
     }
 
     public void paintClicked(View view) {
@@ -68,21 +81,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             imgView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint_pressed));
 
-            // ******************************** NEED THIS LINE. The code is depreciated and I don't know how to fix it.
-    //        currPaint.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint));
+            currPaint.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint));
 
             currPaint=(ImageButton)view;
 
             drawAct.setBrushSize(drawAct.getLastBrushSize());
 
 
-      /*          ------------------------------------------------------------------
-            imgView.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
-       //THis line gives me errors
-         //   currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint));
-            currPaint=(ImageButton)view;
-   --------------------------------------------------------------------------------------  */
 
+            imgView.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
+            currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint));
+            currPaint=(ImageButton)view;
         }
 
     }
@@ -225,6 +234,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 unsavedToast.show();
             }
             drawAct.destroyDrawingCache();
+        }
+        else {
+            for (int i = 0; i < colorIds.length; i++) {
+                if (v.getId() == colorIds[i]) {
+                    drawAct.setColor(colorsArray[i]);
+                }
+            }
         }
 
     }

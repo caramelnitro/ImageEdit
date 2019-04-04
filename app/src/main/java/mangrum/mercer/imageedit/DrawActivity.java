@@ -30,22 +30,29 @@ public class DrawActivity extends View {
     private float brushSize, lastBrushSize;
     private boolean erase = false;
 
+    public DrawActivity(Context context) {
+        super(context);
+        imageDraw();
+    }
     public DrawActivity(Context context, AttributeSet attrs) {
         super(context, attrs);
         imageDraw();
     }
+    public DrawActivity(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        imageDraw();
+    }
+
 
     private void imageDraw() {
 
         brushSize = getResources().getInteger(R.integer.medium_size);
         lastBrushSize = brushSize;
 
-        drawPaint.setStrokeWidth(brushSize);
-
         //setup to draw
         drawPath = new Path();
         drawPaint = new Paint();
-
+        drawPaint.setStrokeWidth(brushSize);
         drawPaint.setColor(paintColor);
 
         drawPaint.setAntiAlias(true);
@@ -73,7 +80,6 @@ public class DrawActivity extends View {
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         canvas.drawPath(drawPath, drawPaint);
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -93,7 +99,8 @@ public class DrawActivity extends View {
             default:
                 return false;
 
-        }invalidate();
+        }
+        invalidate();
         return super.onTouchEvent(event);
         // return true;
     }
