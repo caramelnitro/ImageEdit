@@ -2,7 +2,9 @@ package mangrum.mercer.imageedit;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -100,6 +102,7 @@ public class DrawActivity extends View {
                 return false;
 
         }
+        Log.i("Test", "FINISHED dRaw");
         invalidate();
         return true;
         // return true;
@@ -141,6 +144,28 @@ public class DrawActivity extends View {
     public void startNew(){
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
+    }
+
+    public void grabImage(Bitmap b){
+        canvasBitmap = getResizedBitmap(b, getWidth(), getHeight());
+        invalidate();
+        imageDraw();
+    }
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        bm.recycle();
+        return resizedBitmap;
     }
 
 }

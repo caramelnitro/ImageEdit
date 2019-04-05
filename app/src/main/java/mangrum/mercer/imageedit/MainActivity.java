@@ -1,10 +1,20 @@
 package mangrum.mercer.imageedit;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.PermissionRequest;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -18,8 +28,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final int PERMISSION = 0;
+    private static final int RESULT_LOAD = 1;
     private DrawActivity drawAct;
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, uploadBtn;
     private ImageButton colors;
     private float smallBrush, mediumBrush, largeBrush;
 
@@ -31,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE
+        )!= PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+            PERMISSION);
+        }
         drawAct = findViewById(R.id.drawing);
 
         LinearLayout paintLayout = findViewById(R.id.paint_colors);
@@ -57,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         saveBtn = findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(this);
 
+        uploadBtn = findViewById(R.id.upload_btn);
+        uploadBtn.setOnClickListener(this);
         for(int i = 0; i < paintLayout.getChildCount(); i++){
             colors = (ImageButton)paintLayout.getChildAt(i);
             colors.setOnClickListener(this);
@@ -191,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         // Save
         else if(v.getId()==R.id.save_btn){
-
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
             saveDialog.setTitle("Save drawing");
             saveDialog.setMessage("Save drawing to device Gallery?");
@@ -227,10 +245,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             drawAct.destroyDrawingCache();
         }
+        else if(v.getId() == R.id.upload_btn){
+            Log.i("Made it:", "MADE IT");
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(i, RESULT_LOAD);
+        }
         else {
             paintClicked(v);
         }
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch(requestCode){
+            case RESULT_LOAD:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = data.getData();
+                    String [] filePath = {MediaStore.Images.Media.DATA};
+                    Cursor c = getContentResolver().query(selectedImage, filePath,
+                            null, null, null);
+                    c.moveToFirst();
+                    int colIndex = c.getColumnIndex(filePath[0]);
+                    String picPath = c.getString(colIndex);
+                    c.close();
+                    drawAct.grabImage(BitmapFactory.decodeFile(picPath));
+                }
+        }
+    }
 }
