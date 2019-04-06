@@ -211,6 +211,13 @@
             android:contentDescription="@string/save"
             android:src="@drawable/save" />
 
+        <!-- Add upload button -->
+        <ImageButton
+            android:id="@+id/upload_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:contentDescription="@string/upload"
+            android:src="@drawable/file" />
 
     </LinearLayout>
 

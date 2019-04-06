@@ -20,11 +20,9 @@ public class DrawActivity extends View {
 
     //drawing path
     private Path drawPath;
-    //drawing and canvas paintxml
     private Paint drawPaint, canvasPaint;
     //initial color
     private int paintColor = 0xFF660000;
-    //canvas
     private Canvas drawCanvas;
     //canvas bitmap
     private Bitmap canvasBitmap;
@@ -55,14 +53,20 @@ public class DrawActivity extends View {
         drawPath = new Path();
         drawPaint = new Paint();
         drawPaint.setStrokeWidth(brushSize);
+        //starting color
         drawPaint.setColor(paintColor);
-
         drawPaint.setAntiAlias(true);
+        //initial stroke sizze
         drawPaint.setStrokeWidth(20);
         drawPaint.setStyle(Paint.Style.STROKE);
+
+        //The outer edges of a join meet in a circular arc
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
+
+        //stroke projects out as a semicircle, with the center at the end of the path
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
 
+        //smooths the stroke
         canvasPaint = new Paint(Paint.DITHER_FLAG);
 
     }
@@ -85,24 +89,33 @@ public class DrawActivity extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
+        //position of path drawn by user
         float touchX = event.getX();
         float touchY = event.getY();
         switch (event.getAction()) {
+
+            //touch beginning coordinates
             case MotionEvent.ACTION_DOWN:
                 drawPath.moveTo(touchX, touchY);
                 break;
+
+                //move with path drawn
             case MotionEvent.ACTION_MOVE:
                 drawPath.lineTo(touchX, touchY);
                 break;
+
+                //touch ends coordinates
             case MotionEvent.ACTION_UP:
                 drawCanvas.drawPath(drawPath, drawPaint);
+
+                //reset to 0, 0 coordinate until touch begins.
                 drawPath.reset();
                 break;
             default:
                 return false;
 
         }
-        Log.i("Test", "FINISHED dRaw");
+        Log.i("Test", "FINISHED Draw");
         invalidate();
         return true;
         // return true;
@@ -156,8 +169,10 @@ public class DrawActivity extends View {
         int height = bm.getHeight();
         float scaleWidth = ((float) newWidth) / width;
         float scaleHeight = ((float) newHeight) / height;
+
         // CREATE A MATRIX FOR THE MANIPULATION
         Matrix matrix = new Matrix();
+
         // RESIZE THE BIT MAP
         matrix.postScale(scaleWidth, scaleHeight);
 

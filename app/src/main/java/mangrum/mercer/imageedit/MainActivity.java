@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int PERMISSION = 0;
     private static final int RESULT_LOAD = 1;
+    //instance variable to custom view
     private DrawActivity drawAct;
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, uploadBtn;
     private ImageButton colors;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
             PERMISSION);
         }
+        //reference custom view to call methods
         drawAct = findViewById(R.id.drawing);
 
         LinearLayout paintLayout = findViewById(R.id.paint_colors);
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         uploadBtn = findViewById(R.id.upload_btn);
         uploadBtn.setOnClickListener(this);
+
         for(int i = 0; i < paintLayout.getChildCount(); i++){
             colors = (ImageButton)paintLayout.getChildAt(i);
             colors.setOnClickListener(this);
@@ -93,17 +96,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             drawAct.setColor(color);
 
-
-            /*imgView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint_pressed));
-
-            currPaint.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint));
-
-            currPaint=imgView;*/
-
             drawAct.setBrushSize(drawAct.getLastBrushSize());
 
             imgView.setImageDrawable(getDrawable(R.drawable.paint_pressed));
-            currPaint.setImageDrawable(getDrawable(R.drawable.paint));
+           // currPaint.setImageDrawable(getDrawable(R.drawable.paint));
             currPaint=imgView;
         }
 
@@ -114,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(v.getId()==R.id.draw_btn){
             drawAct.setErase(false);
-            //draw button clicked
+            //draw button clicked allow select brush size
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setTitle("Brush size:");
 
@@ -150,9 +146,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             brushDialog.show();
         }
+
         // Erase
         else if(v.getId()==R.id.erase_btn){
-            //switch to erase - choose size
+            //erase selected - choose size
             final Dialog brushDialog = new Dialog(this);
 
             brushDialog.setTitle("Eraser size:");
@@ -195,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             newDialog.setTitle("New drawing");
             newDialog.setMessage("Start new drawing (you will lose the current drawing)?");
             newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+
                 public void onClick(DialogInterface dialog, int which){
                     drawAct.startNew();
                     dialog.dismiss();
