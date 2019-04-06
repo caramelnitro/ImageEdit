@@ -28,27 +28,30 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int PERMISSION = 0;
+ //   private static final int PERMISSION = 0;
     private static final int RESULT_LOAD = 1;
     //instance variable to custom view
     private DrawActivity drawAct;
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, uploadBtn;
     private ImageButton colors;
     private float smallBrush, mediumBrush, largeBrush;
+/*
 
     private int colorIds[] = {R.id.maroonB, R.id.redB, R.id.orangeB, R.id.yellowB,
     R.id.greenB, R.id.indigoB, R.id. blueB, R.id.purpleB, R.id.salmonB, R.id.whiteB, R.id.greyB, R.id.blackB};
+
+   */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+/*
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE
         )!= PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
             PERMISSION);
-        }
+        }*/
         //reference custom view to call methods
         drawAct = findViewById(R.id.drawing);
 
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawAct.setBrushSize(drawAct.getLastBrushSize());
 
             imgView.setImageDrawable(getDrawable(R.drawable.paint_pressed));
-           // currPaint.setImageDrawable(getDrawable(R.drawable.paint));
+           currPaint.setImageDrawable(getDrawable(R.drawable.paint));
             currPaint=imgView;
         }
 
@@ -253,11 +256,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+/*
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+    */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
