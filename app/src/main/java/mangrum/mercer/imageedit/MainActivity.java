@@ -7,14 +7,12 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.webkit.PermissionRequest;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -28,7 +26,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
- //   private static final int PERMISSION = 0;
+    private static final int PERMISSION = 0;
     private static final int RESULT_LOAD = 1;
     //instance variable to custom view
     private DrawActivity drawAct;
@@ -46,12 +44,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE
         )!= PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
             PERMISSION);
-        }*/
+        }
         //reference custom view to call methods
         drawAct = findViewById(R.id.drawing);
 
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         currPaint = (ImageButton)paintLayout.getChildAt(0);
 
-        currPaint.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint_pressed));
+        currPaint.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paint_selected));
 
         smallBrush = getResources().getInteger(R.integer.small_size);
         mediumBrush = getResources().getInteger(R.integer.medium_size);
@@ -101,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             drawAct.setBrushSize(drawAct.getLastBrushSize());
 
-            imgView.setImageDrawable(getDrawable(R.drawable.paint_pressed));
+            imgView.setImageDrawable(getDrawable(R.drawable.paint_selected));
            currPaint.setImageDrawable(getDrawable(R.drawable.paint));
             currPaint=imgView;
         }
@@ -117,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setTitle("Brush size:");
 
-            brushDialog.setContentView(R.layout.brush_choice);
+            brushDialog.setContentView(R.layout.brushes);
 
             ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
             smallBtn.setOnClickListener(new OnClickListener(){
@@ -156,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final Dialog brushDialog = new Dialog(this);
 
             brushDialog.setTitle("Eraser size:");
-            brushDialog.setContentView(R.layout.brush_choice);
+            brushDialog.setContentView(R.layout.brushes);
 
             ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
             smallBtn.setOnClickListener(new OnClickListener(){

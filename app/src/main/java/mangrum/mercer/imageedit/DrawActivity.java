@@ -19,11 +19,11 @@ import android.util.TypedValue;
 public class DrawActivity extends View {
 
     //drawing path
-    private Path drawPath;
-    private Paint drawPaint, canvasPaint;
+    private Path path;
+    private Paint paint, canvasPaint;
     //initial color
-    private int paintColor = 0xFF660000;
-    private Canvas drawCanvas;
+    private int paintColor = 0xFFFF2020;
+    private Canvas canvas;
     //canvas bitmap
     private Bitmap canvasBitmap;
 
@@ -50,21 +50,21 @@ public class DrawActivity extends View {
         lastBrushSize = brushSize;
 
         //setup to draw
-        drawPath = new Path();
-        drawPaint = new Paint();
-        drawPaint.setStrokeWidth(brushSize);
+     path = new Path();
+        paint = new Paint();
+        paint.setStrokeWidth(brushSize);
         //starting color
-        drawPaint.setColor(paintColor);
-        drawPaint.setAntiAlias(true);
+        paint.setColor(paintColor);
+       paint.setAntiAlias(true);
         //initial stroke sizze
-        drawPaint.setStrokeWidth(20);
-        drawPaint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(20);
+        paint.setStyle(Paint.Style.STROKE);
 
         //The outer edges of a join meet in a circular arc
-        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeJoin(Paint.Join.ROUND);
 
         //stroke projects out as a semicircle, with the center at the end of the path
-        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+       paint.setStrokeCap(Paint.Cap.ROUND);
 
         //smooths the stroke
         canvasPaint = new Paint(Paint.DITHER_FLAG);
@@ -76,7 +76,7 @@ public class DrawActivity extends View {
         super.onSizeChanged(w, h, oldw, oldh);
 
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        drawCanvas = new Canvas(canvasBitmap);
+        canvas = new Canvas(canvasBitmap);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class DrawActivity extends View {
         super.onDraw(canvas);
 
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
-        canvas.drawPath(drawPath, drawPaint);
+        canvas.drawPath(path, paint);
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -96,20 +96,20 @@ public class DrawActivity extends View {
 
             //touch beginning coordinates
             case MotionEvent.ACTION_DOWN:
-                drawPath.moveTo(touchX, touchY);
+                path.moveTo(touchX, touchY);
                 break;
 
                 //move with path drawn
             case MotionEvent.ACTION_MOVE:
-                drawPath.lineTo(touchX, touchY);
+                path.lineTo(touchX, touchY);
                 break;
 
                 //touch ends coordinates
             case MotionEvent.ACTION_UP:
-                drawCanvas.drawPath(drawPath, drawPaint);
+               canvas.drawPath(path, paint);
 
                 //reset to 0, 0 coordinate until touch begins.
-                drawPath.reset();
+                path.reset();
                 break;
             default:
                 return false;
@@ -127,7 +127,7 @@ public class DrawActivity extends View {
 
         //set color
         paintColor = Color.parseColor(newColor);
-        drawPaint.setColor(paintColor);
+        paint.setColor(paintColor);
     }
 
     public void setBrushSize(float newSize){
@@ -135,7 +135,7 @@ public class DrawActivity extends View {
         float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 newSize, getResources().getDisplayMetrics());
         brushSize=pixelAmount;
-        drawPaint.setStrokeWidth(brushSize);
+        paint.setStrokeWidth(brushSize);
     }
 
     public void setLastBrushSize(float lastSize){
@@ -150,12 +150,12 @@ public class DrawActivity extends View {
         //set erase true or false
         erase=isErase;
 
-        if(erase) drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        else drawPaint.setXfermode(null);
+        if(erase)paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        else paint.setXfermode(null);
     }
 
     public void startNew(){
-        drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        canvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
     }
 
