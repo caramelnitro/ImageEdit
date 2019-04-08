@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawAct.setErase(false);
             //draw button clicked allow select brush size
             final Dialog brushDialog = new Dialog(this);
-            brushDialog.setTitle("Brush size:");
+            brushDialog.setTitle("Brush:");
 
             brushDialog.setContentView(R.layout.brushes);
 
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //erase selected - choose size
             final Dialog brushDialog = new Dialog(this);
 
-            brushDialog.setTitle("Eraser size:");
+            brushDialog.setTitle("Eraser:");
             brushDialog.setContentView(R.layout.brushes);
 
             ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
             newDialog.setTitle("New drawing");
-            newDialog.setMessage("Start new drawing (you will lose the current drawing)?");
+            newDialog.setMessage("Would you like to start new drawing?");
             newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
 
                 public void onClick(DialogInterface dialog, int which){
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(v.getId()==R.id.save_btn){
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
             saveDialog.setTitle("Save drawing");
-            saveDialog.setMessage("Save drawing to device Gallery?");
+            saveDialog.setMessage("Save drawing to Gallery?");
             saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which){
 
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             else{
                 Toast unsavedToast = Toast.makeText(getApplicationContext(),
-                        "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
+                        "Unable to save image.", Toast.LENGTH_SHORT);
                 unsavedToast.show();
             }
             drawAct.destroyDrawingCache();
