@@ -56,7 +56,7 @@ public class DrawActivity extends View {
         //starting color
         paint.setColor(paintColor);
        paint.setAntiAlias(true);
-        //initial stroke sizze
+        //initial stroke size
         paint.setStrokeWidth(20);
         paint.setStyle(Paint.Style.STROKE);
 
@@ -97,6 +97,7 @@ public class DrawActivity extends View {
             //touch beginning coordinates
             case MotionEvent.ACTION_DOWN:
                 path.moveTo(touchX, touchY);
+                Log.i("Test", "Down!");
                 break;
 
                 //move with path drawn
@@ -160,9 +161,12 @@ public class DrawActivity extends View {
     }
 
     public void grabImage(Bitmap b){
+
         canvasBitmap = getResizedBitmap(b, getWidth(), getHeight());
+        canvas = new Canvas(canvasBitmap);
         invalidate();
         imageDraw();
+
     }
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
