@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageButton
+            android:id="@+id/gray"
+            android:backgroundTint=""
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight=".25"
+            android:scaleType="fitXY"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/gray_img" />
+
+        <ImageButton
+            android:id="@+id/lighter"
+            android:backgroundTint=""
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight=".25"
+            android:scaleType="fitXY"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/lighter_img" />
+
+        <ImageButton
+            android:id="@+id/darker"
+            android:backgroundTint=""
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight=".25"
+            android:scaleType="fitXY"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/darker_img" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
