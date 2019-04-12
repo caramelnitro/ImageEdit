@@ -71,6 +71,9 @@ public class DrawActivity extends View {
         //smooths the stroke
         canvasPaint = new Paint(Paint.DITHER_FLAG);
 
+        //disable hardware acceleration to fix the black erase background
+        setLayerType(View.LAYER_TYPE_HARDWARE, null);
+
     }
 
     @Override
