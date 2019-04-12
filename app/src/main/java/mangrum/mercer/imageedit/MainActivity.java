@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
-            ImageButton largeBtn = brushDialog.findViewById(R.id.large_brush);
-            largeBtn.setOnClickListener(new OnClickListener(){
+            ImageButton darkerBtn = brushDialog.findViewById(R.id.large_brush);
+            darkerBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     drawAct.setBrushSize(largeBrush);
@@ -250,25 +250,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final Dialog brushDialog = new Dialog(this);
 
             brushDialog.setTitle("Pick Filter:");
-            brushDialog.setContentView(R.layout.brushes);
+            brushDialog.setContentView(R.layout.grayscale);
 
-            ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
-            smallBtn.setOnClickListener(new OnClickListener(){
+            ImageButton grayBtn = brushDialog.findViewById(R.id.gray);
+            grayBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     drawAct.gray();
                     brushDialog.dismiss();
                 }
             });
-            ImageButton mediumBtn = brushDialog.findViewById(R.id.medium_brush);
-            mediumBtn.setOnClickListener(new OnClickListener(){
+            ImageButton lighterBtn = brushDialog.findViewById(R.id.lighter);
+            lighterBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     drawAct.bright();
                     brushDialog.dismiss();
                 }
             });
-            ImageButton largeBtn = brushDialog.findViewById(R.id.large_brush);
+            ImageButton largeBtn = brushDialog.findViewById(R.id.darker);
             largeBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
