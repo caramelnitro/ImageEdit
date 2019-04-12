@@ -30,6 +30,8 @@ public class DrawActivity extends View {
     private float brushSize, lastBrushSize;
     private boolean erase = false;
 
+    ConvolutionMatrix cm = new ConvolutionMatrix(3);
+
     public DrawActivity(Context context) {
         super(context);
         imageDraw();
