@@ -15,7 +15,7 @@
 
         <ImageButton
             android:id="@+id/gray"
-            android:backgroundTint=""
+            android:background="?android:selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_weight=".25"
@@ -26,7 +26,7 @@
 
         <ImageButton
             android:id="@+id/lighter"
-            android:backgroundTint=""
+            android:background="?android:selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_weight=".25"
@@ -37,7 +37,7 @@
 
         <ImageButton
             android:id="@+id/darker"
-            android:backgroundTint=""
+            android:background="?android:selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_weight=".25"
