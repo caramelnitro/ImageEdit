@@ -25,7 +25,7 @@ public class DrawActivity extends View {
     private int paintColor = 0xFFFF2020;
     private Canvas canvas;
     //canvas bitmap
-    private Bitmap canvasBitmap;
+    private Bitmap canvasBitmap, filterMap;
 
     private float brushSize, lastBrushSize;
     private boolean erase = false;
@@ -50,7 +50,7 @@ public class DrawActivity extends View {
         lastBrushSize = brushSize;
 
         //setup to draw
-     path = new Path();
+        path = new Path();
         paint = new Paint();
         paint.setStrokeWidth(brushSize);
         //starting color
@@ -186,5 +186,68 @@ public class DrawActivity extends View {
         bm.recycle();
         return resizedBitmap;
     }
+    public void gray() {
+        filterMap = Bitmap.createBitmap(canvasBitmap.getWidth(),canvasBitmap.getHeight(), canvasBitmap.getConfig());
+        double red = 0.33;
+        double green = 0.59;
+        double blue = 0.11;
+        int p, r, g, b;
 
+        for (int i = 0; i < canvasBitmap.getWidth(); i++) {
+            for (int j = 0; j < canvasBitmap.getHeight(); j++) {
+                p = canvasBitmap.getPixel(i, j);
+                r = Color.red(p);
+                g = Color.green(p);
+                b = Color.blue(p);
+
+                r = (int) red * r;
+                g = (int) green * g;
+                b = (int) blue * b;
+                filterMap.setPixel(i, j, Color.argb(Color.alpha(p), r, g, b));
+            }
+        }
+        grabImage(filterMap);
+    }
+    public void  bright(){
+        filterMap = Bitmap.createBitmap(canvasBitmap.getWidth(),canvasBitmap.getHeight(), canvasBitmap.getConfig());
+
+        int p, r, g, b, alpha;
+        for (int i = 0; i < canvasBitmap.getWidth(); i++) {
+            for (int j = 0; j < canvasBitmap.getHeight(); j++) {
+                p = canvasBitmap.getPixel(i, j);
+                r = Color.red(p);
+                g = Color.green(p);
+                b = Color.blue(p);
+                alpha = Color.alpha(p);
+
+                r = r + 50;
+                g = g + 50;
+                b = b + 50;
+                alpha = alpha + 50;
+                filterMap.setPixel(i, j, Color.argb(alpha, r, g, b));
+            }
+        }
+        grabImage(filterMap);
+    }
+    public void  dark(){
+        filterMap = Bitmap.createBitmap(canvasBitmap.getWidth(),canvasBitmap.getHeight(), canvasBitmap.getConfig());
+
+        int p, r, g, b, alpha;
+        for (int i = 0; i < canvasBitmap.getWidth(); i++) {
+            for (int j = 0; j < canvasBitmap.getHeight(); j++) {
+                p = canvasBitmap.getPixel(i, j);
+                r = Color.red(p);
+                g = Color.green(p);
+                b = Color.blue(p);
+                alpha = Color.alpha(p);
+
+                r = r - 50;
+                g = g - 50;
+                b = b - 50;
+                alpha = alpha - 50;
+                filterMap.setPixel(i, j, Color.argb(alpha, r, g, b));
+            }
+        }
+        grabImage(filterMap);
+    }
 }

@@ -30,15 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int RESULT_LOAD = 1;
     //instance variable to custom view
     private DrawActivity drawAct;
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, uploadBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, uploadBtn, filterBtn;
     private ImageButton colors;
     private float smallBrush, mediumBrush, largeBrush;
-/*
-
-    private int colorIds[] = {R.id.maroonB, R.id.redB, R.id.orangeB, R.id.yellowB,
-    R.id.greenB, R.id.indigoB, R.id. blueB, R.id.purpleB, R.id.salmonB, R.id.whiteB, R.id.greyB, R.id.blackB};
-
-   */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         uploadBtn = findViewById(R.id.upload_btn);
         uploadBtn.setOnClickListener(this);
+
+        filterBtn = findViewById(R.id.filter_button);
+        filterBtn.setOnClickListener(this);
 
         for(int i = 0; i < paintLayout.getChildCount(); i++){
             colors = (ImageButton)paintLayout.getChildAt(i);
@@ -245,9 +242,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawAct.destroyDrawingCache();
         }
         else if(v.getId() == R.id.upload_btn){
-            Log.i("Made it:", "MADE IT");
             Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(i, RESULT_LOAD);
+        }
+        else if(v.getId() == R.id.filter_button){
+            //erase selected - choose size
+            final Dialog brushDialog = new Dialog(this);
+
+            brushDialog.setTitle("Pick Filter:");
+            brushDialog.setContentView(R.layout.brushes);
+
+            ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
+            smallBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawAct.gray();
+                    brushDialog.dismiss();
+                }
+            });
+            ImageButton mediumBtn = brushDialog.findViewById(R.id.medium_brush);
+            mediumBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawAct.bright();
+                    brushDialog.dismiss();
+                }
+            });
+            ImageButton largeBtn = brushDialog.findViewById(R.id.large_brush);
+            largeBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawAct.dark();
+                    brushDialog.dismiss();
+                }
+            });
+            brushDialog.show();
         }
         else {
             paintClicked(v);
