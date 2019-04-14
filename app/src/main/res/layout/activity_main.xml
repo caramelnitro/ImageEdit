@@ -176,6 +176,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/text" />
 
+
         <!-- Add new button -->
         <ImageButton
             android:id="@+id/new_btn"

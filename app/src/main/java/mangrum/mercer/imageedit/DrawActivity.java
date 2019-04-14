@@ -156,12 +156,13 @@ public class DrawActivity extends View {
         //set erase true or false
         erase=isErase;
 
-        paint.setColor(Color.WHITE);
         if(erase)paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         else paint.setXfermode(null);
+        
     }
 
     public void startNew(){
+        paint.setColor(Color.WHITE);
         canvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
     }
