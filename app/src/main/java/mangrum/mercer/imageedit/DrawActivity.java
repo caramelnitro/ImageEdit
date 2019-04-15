@@ -20,7 +20,9 @@ public class DrawActivity extends View {
 
     //drawing path
     private Path path;
+    private boolean rect = false;
     private Paint paint, canvasPaint;
+    private static float startRectX, startRectY;
     //initial color
     private int paintColor = 0xFFFF2020;
     private Canvas canvas;
@@ -57,7 +59,7 @@ public class DrawActivity extends View {
         paint.setStrokeWidth(brushSize);
         //starting color
         paint.setColor(paintColor);
-       paint.setAntiAlias(true);
+        paint.setAntiAlias(true);
         //initial stroke size
         paint.setStrokeWidth(20);
         paint.setStyle(Paint.Style.STROKE);
@@ -102,12 +104,23 @@ public class DrawActivity extends View {
             //touch beginning coordinates
             case MotionEvent.ACTION_DOWN:
                 path.moveTo(touchX, touchY);
+                startRectX = touchX;
+                startRectY = touchY;
+                if(rect) {
+                    path.addRect(touchX, touchY, touchX, touchY, Path.Direction.CW);
+                }
                 Log.i("Test", "Down!");
                 break;
 
                 //move with path drawn
             case MotionEvent.ACTION_MOVE:
-                path.lineTo(touchX, touchY);
+                if(!rect) {
+                    path.lineTo(touchX, touchY);
+                }
+                else{
+                    path.addRect(startRectX, startRectY, touchX, touchY, Path.Direction.CW);
+                }
+
                 break;
 
                 //touch ends coordinates
@@ -256,5 +269,8 @@ public class DrawActivity extends View {
             }
         }
         grabImage(filterMap);
+    }
+    public void setRect(Boolean b){
+        rect = b;
     }
 }

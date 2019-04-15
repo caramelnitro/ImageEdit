@@ -196,6 +196,14 @@
             android:scaleType="fitXY"
             android:layout_weight="1"
             android:src="@drawable/eraser" />
+        <ImageButton
+            android:id="@+id/square_btn"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:contentDescription="@string/erase"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            android:src="@drawable/eraser" />
 
         <!-- Add save button -->
         <ImageButton

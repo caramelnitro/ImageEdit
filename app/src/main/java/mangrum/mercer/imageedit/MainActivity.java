@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int RESULT_LOAD = 1;
     //instance variable to custom view
     private DrawActivity drawAct;
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, uploadBtn, filterBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, uploadBtn, filterBtn, squareBtn;
     private ImageButton colors;
     private float smallBrush, mediumBrush, largeBrush;
 
@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         filterBtn = findViewById(R.id.filter_button);
         filterBtn.setOnClickListener(this);
 
+        squareBtn = findViewById(R.id.square_btn);
+        squareBtn.setOnClickListener(this);
+
         for(int i = 0; i < paintLayout.getChildCount(); i++){
             colors = (ImageButton)paintLayout.getChildAt(i);
             colors.setOnClickListener(this);
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(v.getId()==R.id.draw_btn){
             drawAct.setErase(false);
+            drawAct.setRect(false);
             //draw button clicked allow select brush size
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setTitle("Brush:");
@@ -277,6 +281,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
             brushDialog.show();
+        }
+        else if(v.getId() == R.id.square_btn){
+            drawAct.setRect(true);
         }
         else {
             paintClicked(v);
