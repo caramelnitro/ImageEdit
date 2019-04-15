@@ -22,7 +22,7 @@ public class DrawActivity extends View {
     private Path path;
     private boolean rect = false;
     private Paint paint, canvasPaint;
-    private static float startRectX, startRectY;
+    private float startRectX, startRectY;
     //initial color
     private int paintColor = 0xFFFF2020;
     private Canvas canvas;
@@ -31,8 +31,6 @@ public class DrawActivity extends View {
 
     private float brushSize, lastBrushSize;
     private boolean erase = false;
-
-    ConvolutionMatrix cm = new ConvolutionMatrix(3);
 
     public DrawActivity(Context context) {
         super(context);
@@ -106,9 +104,6 @@ public class DrawActivity extends View {
                 path.moveTo(touchX, touchY);
                 startRectX = touchX;
                 startRectY = touchY;
-                if(rect) {
-                    path.addRect(touchX, touchY, touchX, touchY, Path.Direction.CW);
-                }
                 Log.i("Test", "Down!");
                 break;
 
