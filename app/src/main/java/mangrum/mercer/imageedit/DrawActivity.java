@@ -1,8 +1,11 @@
 package mangrum.mercer.imageedit;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +18,10 @@ import android.view.MotionEvent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.TypedValue;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class DrawActivity extends View {
 
@@ -152,7 +159,7 @@ public class DrawActivity extends View {
         paint.setStrokeWidth(brushSize);
     }
 
-    public void setLastBrushSize(float lastSize){
+   public void setLastBrushSize(float lastSize){
         lastBrushSize=lastSize;
     }
 
@@ -201,6 +208,7 @@ public class DrawActivity extends View {
         bm.recycle();
         return resizedBitmap;
     }
+
     public void gray() {
         filterMap = Bitmap.createBitmap(canvasBitmap.getWidth(),canvasBitmap.getHeight(), canvasBitmap.getConfig());
         double red = 0.33;

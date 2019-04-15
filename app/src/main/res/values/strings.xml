@@ -5,10 +5,11 @@
     <string name="start_new">New</string>
     <string name="brush">Brush</string>
     <string name="erase">Erase</string>
+    <string name="square">Square</string>
     <string name="save">Save</string>
     <string name="paint">Paint</string>
     <string name="upload">Upload</string>
-    <string name="text">Text</string>
+  <!--  <string name="text">Text</string>-->
     <string name="filter">Filter</string>
 
     <string name="sml">Small</string>

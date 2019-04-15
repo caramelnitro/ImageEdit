@@ -4,9 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -16,6 +19,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.UUID;
 import android.provider.MediaStore;
 import android.app.AlertDialog;
@@ -215,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             saveDialog.setMessage("Save drawing to Gallery?");
             saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which){
-
+                    saveBtn.setEnabled(true);
                 }
             });
             saveDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
@@ -290,14 +295,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-/*
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode)
+        {
+            case  PERMISSION:
+            {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        //do nothing
+                    }
+                }
+                else
+                {
+                    Toast.makeText(this, "No permission granted!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }
     }
 
-    */
+    //saving the image in internal storage
+    private void save(Bitmap bitmap, String fileName) {
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/FILTEREDIMAGES";
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dirPath, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            Toast.makeText(this, "Image saved!", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
